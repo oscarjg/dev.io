@@ -1,0 +1,8 @@
+app.homepage:
+    path: /example
+    defaults:
+        _controller: AppBundle:Default:index
+app.user:
+    path: /user
+    defaults:
+        _controller: AppBundle:Default:user

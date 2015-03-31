@@ -1,0 +1,17 @@
+default:
+    suites:
+        default:
+            paths:    [ %paths.base%/../../src/Tests/Features/example/ ]
+            contexts:
+                - Tests\Contexts\FeatureHttpContext: ~
+    extensions:
+        Behat\Symfony2Extension: ~
+        Behat\MinkExtension:
+            base_url: http://dev.io/app_test.php/
+            sessions:
+                default:
+                    symfony2: ~
+                javascript:
+                    selenium2:
+                        wd_host: http://selenium.dev:4444/wd/hub
+            browser_name: firefox

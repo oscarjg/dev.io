@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {{ 'test'|trans }}
+    <a id="button" href="#" title="Open alert!">Open modal</a>
+    <a href="{{ path('app.user') }}" title="Go to user">Go to user</a>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        (function ($, window) {
+            window.bootstrap = {
+                createModal: function()
+                {
+                    return {
+                        struct: '<div class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span>&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-circle btn-default" data-dismiss="modal"></button><button type="button" class="btn btn-circle btn-primary"></button></div></div></div></div>',
+                        show: function (header, body, button, hiddenAccept) {
+                            var modal = $(bootstrap.modal.struct);
+                            modal.find('h4').html(header);
+                            modal.find('.modal-body').html(body);
+                            modal.find('.btn-primary').html(button);
+                            modal.find('.btn-default').html('Aceptar');
+                            modal.filter('.modal').modal('show');
+
+                            if (hiddenAccept) {
+                                modal.find('.btn-primary').remove();
+                            }
+
+                            return modal;
+                        },
+                        hide: function () {
+                            var modal = $(bootstrap.modal.struct);
+                            $('body').filter('.modal').modal('hide');
+                        }
+                    };
+                },
+                modal: null
+            };
+
+            bootstrap.modal = bootstrap.createModal();
+
+            $('#button').click(function (e) {
+                e.preventDefault();
+                window.bootstrap.modal.show('HOLA!');
+            });
+        })(jQuery, window);
+
+    </script>
+{% endblock %}
